@@ -21,7 +21,7 @@ void Slav::init()
 
 Slav::Slav()
 {
-	static int amountOfNames = (init(), names.size());
+	static int amountOfNames = (init(), names.size());//Jest to tzw. leniwa inicjalizacja, czyli inicjalizacja na ostatnią chwilę.
 	_name = names[rand() % amountOfNames];
 	_id = _counter++;
 }
@@ -29,4 +29,13 @@ Slav::Slav()
 string Slav::description()
 {
 	return string("  ") + _name + " [" + to_string(_id) + "]";
+}
+
+_gender Slav::gender(){
+
+	if(_name[_name.size()-1]!='a')
+		return male;
+
+	return female;
+
 }

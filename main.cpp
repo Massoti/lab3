@@ -24,6 +24,8 @@ void showMeAdapterSizes(queue <Slav *>, stack <Slav *>);
 void containers(Slav *, int);
 void adapters(Slav *, int);
 
+void sortByGender(Slav *, int);
+
 int main(int argc, char const *argv[])
 {
 	int n = 2 * atoi(argv[1]);
@@ -131,17 +133,85 @@ void adapters(Slav * slavs, int n)
 	printf("## queue\n");
 
 	// Umieść Słowian w kolejce.
+
+	for (int i=0; i<n; i++){
+
+		queueOfSlavs.push(&slavs[i]);
+
+	}
 	
 	REPORT_ADAPTERS;
 
 	printf("## stack\n");
+
 	// Przenieś Słowian z kolejki do stosu.
+
+	for(int i=0; i<n; i++){
+
+		stackOfSlavs.push(queueOfSlavs.front());
+		queueOfSlavs.pop();
+
+	}
 
 	REPORT_ADAPTERS;
 
 	// Wyświetl Słowian zdejmowanych ze stosu.
 
+	for(int i=0; i<n; i++){
+
+		cout << (stackOfSlavs.top())->description() << endl;
+		stackOfSlavs.pop();
+
+	}
+
 	REPORT_ADAPTERS;
+}
+
+void sortByGender(Slav* slavs, int n){
+
+	map <_gender, vector <Slav*> > mapOfSlavsGender;
+
+	for(int i=0; i<n; i++){
+
+		if((slavs + i)->gender() == male)
+			mapOfSlavsGender[male].push_back(slavs + i);
+
+		else
+			mapOfSlavsGender[female].push_back(slavs + i);
+
+	}
+
+	vector <Slav *>::iterator it = mapOfSlavsGender[male].begin();
+
+	int i=0;
+
+	_gender genderOfSlav;
+
+	while(it != mapOfSlavsGender[male].end()){
+
+		cout << (*it)->description() << endl;
+		it++;
+		i++;
+	}
+
+	if(i == 0)
+		cout << "Nie ma mezczyzn" << endl;
+
+
+	it = mapOfSlavsGender[female].begin();
+
+	i=0;
+
+	while(it != mapOfSlavsGender[female].end()){
+
+		cout << (*it)->description() << endl;
+		it++;
+		i++;
+	}
+
+	if(i == 0)
+		cout << "Nie ma kobiet" << endl;
+
 }
 
 void showMeContainerSizes(vector <Slav *> vector, set <Slav *> set, map <Slav *, Slav*> map)
